@@ -1,0 +1,10 @@
+Show List Template
+<a ui-sref="showNew">Add a new show</a>
+<div ng-repeat="show in showListVm.shows">
+  <p>{{show.title}}</p>
+  <p>{{show.length}}</p>
+  <p>{{show.source}}</p>
+  <a ui-sref="showShow({id: show.id})">See This Show</a>
+  <a ng-click="showListVm.destroy(show)">This Show Sucks!</a>
+  <hr>
+</div>
