@@ -5,19 +5,30 @@
     .controller("ShowNewController", ShowNewController)
     .controller("ShowEditController", ShowEditController);
 
-    ShowListController.$inject = ['ShowResource'];
+    ShowListController.$inject = ['ShowResource', '$http'];
     ShowShowController.$inject = ['ShowResource', '$stateParams'];
     ShowNewController.$inject = ['ShowResource', '$state'];
     ShowEditController.$inject = ['ShowResource', '$stateParams', '$state'];
 
-    function ShowListController(ShowResource) {
+    function ShowListController(ShowResource, $http) {
       var vm = this;
       vm.shows = [];
       vm.destroy = destroy;
 
-      ShowResource.query().$promise.then(function(shows) {
-        vm.shows = shows;
-      });
+      // Simple GET request example:
+      $http({
+        method: 'GET',
+        url: 'http://stats.nba.com/stats/homepagev2?GameScope=Season&LeagueID=00&PlayerOrTeam=Player&PlayerScope=All+Players&Season=2016-17&SeasonType=Regular+Season&StatType=Traditional'
+      }).then(function successCallback(response) {
+          console.log(response)
+        }, function errorCallback(response) {
+          // called asynchronously if an error occurs
+          // or server returns response with an error status.
+        });
+
+      // ShowResource.query().$promise.then(function(shows) {
+      //   vm.shows = shows;
+      // });
 
       function destroy(showToDelete) {
         ShowResource.delete({id: showToDelete.id}).$promise.then(function (response) {
